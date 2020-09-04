@@ -4,6 +4,16 @@ import typing
 def encode(data: typing.Union[bytes, bytearray, typing.List[int]]) -> bytes:
     """
     G. E. Thomas convention
+
+    >>> manchester_code = encode([0b00001111, 0b01101001])
+    >>> ''.join(['{:08b}'.format(m) for m in manchester_code])
+    '01010101101010100110100110010110'
+
+    >>> manchester_code = encode(b'msg')
+    >>> manchester_code
+    b'i\xa6jZij'
+    >>> ''.join(['{:08b}'.format(m) for m in manchester_code])
+    '011010011010011001101010010110100110100101101010'
     """
     manchester_code: typing.List[int] = []
     for byte in data:
@@ -31,6 +41,13 @@ def _decode_manchester_bit(manchester_bit: int) -> int:
 def decode(manchester_code: typing.Union[bytes, bytearray, typing.List[int]]) -> bytes:
     """
     G. E. Thomas convention
+
+    >>> data = decode([0b01010101, 0b10101010, 0b01101001, 0b10010110])
+    >>> ''.join(['{:08b}'.format(m) for m in data])
+    '0000111101101001'
+
+    >>> decode(b'ieiVjeiV')
+    b'data'
     """
     data = bytearray()
     for manchester_byte in zip(manchester_code[0::2], manchester_code[1::2]):
