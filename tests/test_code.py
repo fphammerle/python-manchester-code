@@ -48,3 +48,8 @@ def test_decode(data, code):
     assert bytes(data) == manchester_code.decode(code)
     assert bytes(data) == manchester_code.decode(bytes(code))
     assert bytes(data) == manchester_code.decode(bytearray(code))
+
+
+def test_decode_invalid():
+    with pytest.raises(ValueError):
+        manchester_code.decode([0b01010101, 0b01110101])
