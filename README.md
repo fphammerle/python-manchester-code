@@ -1,7 +1,7 @@
 # manchester-code
 
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![CI Pipeline Status](https://github.com/fphammerle/manchester-code/workflows/tests/badge.svg)](https://github.com/fphammerle/manchester-code/actions)
+[![CI Pipeline Status](https://github.com/fphammerle/python-manchester-code/workflows/tests/badge.svg)](https://github.com/fphammerle/python-manchester-code/actions)
 [![Last Release](https://img.shields.io/pypi/v/manchester-code.svg)](https://pypi.org/project/manchester-code/#history)
 [![Compatible Python Versions](https://img.shields.io/pypi/pyversions/manchester-code.svg)](https://pypi.org/project/manchester-code/)
 

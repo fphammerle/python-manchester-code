@@ -19,7 +19,7 @@ import pathlib
 
 import setuptools
 
-_REPO_URL = "https://github.com/fphammerle/manchester-code"
+_REPO_URL = "https://github.com/fphammerle/python-manchester-code"
 
 setuptools.setup(
     name="manchester-code",
