@@ -22,6 +22,6 @@ import manchester_code
     ),
 )
 def test_encode(data, encoded):
-    assert encoded == manchester_code.encode(data)
-    assert encoded == manchester_code.encode(bytes(data))
-    assert encoded == manchester_code.encode(bytearray(data))
+    assert bytes(encoded) == manchester_code.encode(data)
+    assert bytes(encoded) == manchester_code.encode(bytes(data))
+    assert bytes(encoded) == manchester_code.encode(bytearray(data))

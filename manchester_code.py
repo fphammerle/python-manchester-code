@@ -1,7 +1,7 @@
 import typing
 
 
-def encode(data: typing.Union[bytes, bytearray, typing.List[int]]):
+def encode(data: typing.Union[bytes, bytearray, typing.List[int]]) -> bytes:
     """
     G. E. Thomas
     """
@@ -17,4 +17,4 @@ def encode(data: typing.Union[bytes, bytearray, typing.List[int]]):
                 encoded_data[-2] |= bits << (bit_index * 2 - 8)
             else:
                 encoded_data[-1] |= bits << (bit_index * 2)
-    return encoded_data
+    return bytes(encoded_data)
