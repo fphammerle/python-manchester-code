@@ -4,6 +4,7 @@
 [![CI Pipeline Status](https://github.com/fphammerle/python-manchester-code/workflows/tests/badge.svg)](https://github.com/fphammerle/python-manchester-code/actions)
 [![Last Release](https://img.shields.io/pypi/v/manchester-code.svg)](https://pypi.org/project/manchester-code/#history)
 [![Compatible Python Versions](https://img.shields.io/pypi/pyversions/manchester-code.svg)](https://pypi.org/project/manchester-code/)
+[![DOI](https://zenodo.org/badge/292872290.svg)](https://zenodo.org/badge/latestdoi/292872290)
 
 Python library to encode & decode data as [Manchester code](https://en.wikipedia.org/wiki/Manchester_code)
 
