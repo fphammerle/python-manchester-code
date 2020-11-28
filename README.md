@@ -19,7 +19,7 @@ $ pip3 install --user --upgrade manchester-code
 0-bits translate to low-high, 1-bits to high-low (G. E. Thomas convention).
 
 ```python
-import manchester-code
+from manchester_code import encode, decode, decode_bits
 
 manchester_code = encode([0b00001111, 0b01101001])
 print(''.join(['{:08b}'.format(m) for m in manchester_code]))
@@ -33,4 +33,10 @@ decode([0b01010101, 0b10101010, 0b01101001, 0b10010110])
 
 decode(b'ieiVjeiV')
 # b'data'
+
+list(decode_bits([False, True, True, False]))
+# [False, True]
+
+list(decode_bits([0, 1, 1, 0, 0, 1, 0, 1]))
+# [False, True, False, False]
 ```
