@@ -55,3 +55,36 @@ def test_decode(data, code):
 def test_decode_invalid():
     with pytest.raises(ValueError):
         manchester_code.decode([0b01010101, 0b01110101])
+
+
+@pytest.mark.parametrize(
+    ("data", "code"),
+    [
+        ([0], [False, True]),
+        ([1], [True, False]),
+        ([False], [False, True]),
+        ([True], [True, False]),
+        ([False, True], [False, True, True, False]),
+        ([True, False], [True, False, False, True]),
+        ([0, 0, 1, 0], [False, True, False, True, True, False, False, True]),
+        ([1, 0, 1, 1], [True, False, False, True, True, False, True, False]),
+    ],
+)
+def test_decode_bits(data, code):
+    assert list(manchester_code.decode_bits(code)) == data
+    # test support for iterator
+    assert list(manchester_code.decode_bits(not b for b in code)) == [
+        not b for b in data
+    ]
+
+
+def test_decode_bits_invalid_bit():
+    with pytest.raises(ValueError, match=r"^invalid bit 2\b"):
+        list(manchester_code.decode_bits([0, 1, 0, 2]))
+
+
+def test_decode_bits_invalid_manchester_bit():
+    with pytest.raises(ValueError, match=r"^invalid manchester bit 0b00$"):
+        list(manchester_code.decode_bits([False, True, False, False]))
+    with pytest.raises(ValueError, match=r"^invalid manchester bit 0b11$"):
+        list(manchester_code.decode_bits([False, True, True, True, False, True]))

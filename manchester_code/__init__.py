@@ -56,7 +56,7 @@ def _decode_manchester_bit(manchester_bit: int) -> int:
         return 1
     if manchester_bit == 0b01:
         return 0
-    raise ValueError("invalid bit 0b{:02b}".format(manchester_bit))
+    raise ValueError("invalid manchester bit 0b{:02b}".format(manchester_bit))
 
 
 def decode(manchester_code: typing.Union[bytes, bytearray, typing.List[int]]) -> bytes:
@@ -84,3 +84,28 @@ def decode(manchester_code: typing.Union[bytes, bytearray, typing.List[int]]) ->
             ) << bit_index
         data.append(byte)
     return bytes(data)
+
+
+def _bit_to_int(bit: typing.Union[int, bool]) -> int:
+    bit = int(bit)
+    if bit not in [0, 1]:
+        raise ValueError("invalid bit {!r}, expected 0, False, 1, or True".format(bit))
+    return bit
+
+
+def decode_bits(
+    manchester_code: typing.Iterable[typing.Union[int, bool]]
+) -> typing.Iterator[bool]:
+    """
+    G. E. Thomas convention
+
+    >>> list(decode_bits([False, True, True, False, True, False]))
+    [False, True, True]
+    >>> list(decode_bits([1, 0, 1, 0, 0, 1, 1, 0]))
+    [True, True, False, True]
+    """
+    manchester_code_int = map(_bit_to_int, manchester_code)
+    return (
+        bool(_decode_manchester_bit((prior << 1) | later))
+        for prior, later in zip(iter(manchester_code_int), iter(manchester_code_int))
+    )
