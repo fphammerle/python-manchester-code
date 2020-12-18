@@ -7,6 +7,8 @@ updates:
   # > - pipenv, pip-compile, and poetry (specify pip)
   package-ecosystem: pip
   directory: /
+  # avoid changes in Pipfile breaking python3.5 compatibility
+  versioning-strategy: lockfile-only
   schedule:
     interval: weekly
     day: friday
