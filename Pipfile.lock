@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "2bd4389314dc9557923ccf4aa3df3227a153a203d23d2f961a500b2f52fc7c4b"
+            "sha256": "765c36289f62f2bf5a820d2e07255c67348fa058b73d0a1cbf1c6db1120165af"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -15,7 +15,12 @@
             }
         ]
     },
-    "default": {},
+    "default": {
+        "manchester-code": {
+            "editable": true,
+            "path": "."
+        }
+    },
     "develop": {
         "appdirs": {
             "hashes": [
@@ -98,6 +103,7 @@
                 "sha256:77a540690e24b0305878c37ffd421785a6f7e53c8b5720d211b211de8d0e95da",
                 "sha256:cefa1a2f919b866c5beb7c9f7b0ebb4061f30a8a9bf16d609b000e2dfaceb9c3"
             ],
+            "index": "pypi",
             "version": "==2.0.0"
         },
         "iniconfig": {
@@ -140,10 +146,6 @@
                 "sha256:f3900e8a5de27447acbf900b4750b0ddfd7ec1ea7fbaf11dfa911141bc522af0"
             ],
             "version": "==1.4.3"
-        },
-        "manchester-code": {
-            "editable": true,
-            "path": "."
         },
         "mccabe": {
             "hashes": [
