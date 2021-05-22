@@ -36,7 +36,7 @@ def encode(data: typing.Union[bytes, bytearray, typing.List[int]]) -> bytes:
     >>> ''.join(['{:08b}'.format(m) for m in manchester_code])
     '011010011010011001101010010110100110100101101010'
     """
-    manchester_code = []  # type: typing.List[int]
+    manchester_code: typing.List[int] = []
     for byte in data:
         manchester_code.extend((0, 0))
         for bit_index in range(7, -1, -1):
