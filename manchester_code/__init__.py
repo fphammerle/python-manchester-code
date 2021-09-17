@@ -27,13 +27,13 @@ def encode(data: typing.Union[bytes, bytearray, typing.List[int]]) -> bytes:
     G. E. Thomas convention
 
     >>> manchester_code = encode([0b00001111, 0b01101001])
-    >>> ''.join(['{:08b}'.format(m) for m in manchester_code])
+    >>> ''.join(f'{m:08b}' for m in manchester_code)
     '01010101101010100110100110010110'
 
     >>> manchester_code = encode(b'msg')
     >>> manchester_code
     b'i\xa6jZij'
-    >>> ''.join(['{:08b}'.format(m) for m in manchester_code])
+    >>> ''.join(f'{m:08b}' for m in manchester_code)
     '011010011010011001101010010110100110100101101010'
     """
     manchester_code: typing.List[int] = []
@@ -56,7 +56,7 @@ def _decode_manchester_bit(manchester_bit: int) -> int:
         return 1
     if manchester_bit == 0b01:
         return 0
-    raise ValueError("invalid manchester bit 0b{:02b}".format(manchester_bit))
+    raise ValueError(f"invalid manchester bit 0b{manchester_bit:02b}")
 
 
 def decode(manchester_code: typing.Union[bytes, bytearray, typing.List[int]]) -> bytes:
@@ -64,7 +64,7 @@ def decode(manchester_code: typing.Union[bytes, bytearray, typing.List[int]]) ->
     G. E. Thomas convention
 
     >>> data = decode([0b01010101, 0b10101010, 0b01101001, 0b10010110])
-    >>> ''.join(['{:08b}'.format(m) for m in data])
+    >>> ''.join(f'{m:08b}' for m in data)
     '0000111101101001'
 
     >>> decode(b'ieiVjeiV')
@@ -89,7 +89,7 @@ def decode(manchester_code: typing.Union[bytes, bytearray, typing.List[int]]) ->
 def _bit_to_int(bit: typing.Union[int, bool]) -> int:
     bit = int(bit)
     if bit not in [0, 1]:
-        raise ValueError("invalid bit {!r}, expected 0, False, 1, or True".format(bit))
+        raise ValueError(f"invalid bit {bit!r}, expected 0, False, 1, or True")
     return bit
 
 
