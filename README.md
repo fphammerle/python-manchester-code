@@ -22,7 +22,7 @@ $ pip3 install --user --upgrade manchester-code
 from manchester_code import encode, decode, decode_bits
 
 manchester_code = encode([0b00001111, 0b01101001])
-print(''.join(['{:08b}'.format(m) for m in manchester_code]))
+print(''.join(f'{m:08b}' for m in manchester_code))
 # 01010101101010100110100110010110
 
 encode(b'msg')
