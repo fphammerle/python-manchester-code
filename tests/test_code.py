@@ -17,6 +17,8 @@
 
 # pylint: disable=missing-docstring
 
+import typing
+
 import pytest
 
 import manchester_code
@@ -39,20 +41,20 @@ _DATA_MANCHESTER_CODE_MAPPING = (
 
 
 @pytest.mark.parametrize(("data", "code"), _DATA_MANCHESTER_CODE_MAPPING)
-def test_encode(data, code):
+def test_encode(data: typing.List[int], code: typing.List[int]) -> None:
     assert bytes(code) == manchester_code.encode(data)
     assert bytes(code) == manchester_code.encode(bytes(data))
     assert bytes(code) == manchester_code.encode(bytearray(data))
 
 
 @pytest.mark.parametrize(("data", "code"), _DATA_MANCHESTER_CODE_MAPPING)
-def test_decode(data, code):
+def test_decode(data: typing.List[int], code: typing.List[int]) -> None:
     assert bytes(data) == manchester_code.decode(code)
     assert bytes(data) == manchester_code.decode(bytes(code))
     assert bytes(data) == manchester_code.decode(bytearray(code))
 
 
-def test_decode_invalid():
+def test_decode_invalid() -> None:
     with pytest.raises(ValueError):
         manchester_code.decode([0b01010101, 0b01110101])
 
@@ -70,7 +72,7 @@ def test_decode_invalid():
         ([1, 0, 1, 1], [True, False, False, True, True, False, True, False]),
     ],
 )
-def test_decode_bits(data, code):
+def test_decode_bits(data: typing.List[int], code: typing.List[bool]) -> None:
     assert list(manchester_code.decode_bits(code)) == data
     # test support for iterator
     assert list(manchester_code.decode_bits(not b for b in code)) == [
@@ -78,12 +80,12 @@ def test_decode_bits(data, code):
     ]
 
 
-def test_decode_bits_invalid_bit():
+def test_decode_bits_invalid_bit() -> None:
     with pytest.raises(ValueError, match=r"^invalid bit 2\b"):
         list(manchester_code.decode_bits([0, 1, 0, 2]))
 
 
-def test_decode_bits_invalid_manchester_bit():
+def test_decode_bits_invalid_manchester_bit() -> None:
     with pytest.raises(ValueError, match=r"^invalid manchester bit 0b00$"):
         list(manchester_code.decode_bits([False, True, False, False]))
     with pytest.raises(ValueError, match=r"^invalid manchester bit 0b11$"):
