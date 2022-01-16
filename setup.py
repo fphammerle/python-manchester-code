@@ -41,13 +41,13 @@ setuptools.setup(
         "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
         "Operating System :: POSIX :: Linux",
         # .github/workflows/python.yml
-        "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
         "Topic :: Communications",
     ],
-    python_requires=">=3.6",
+    python_requires=">=3.7",  # python<3.7 untested
     install_requires=[],
     setup_requires=["setuptools_scm"],
     tests_require=["pytest"],

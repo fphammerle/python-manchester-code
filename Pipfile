@@ -7,12 +7,20 @@ name = "pypi"
 manchester-code = {editable = true, path = "."}
 
 [dev-packages]
-black = "==20.8b1"
+black = "==21.12b0"
 mypy = "*"
 pylint = "*"
 pylint-import-requirements = "*"
 pytest = "*"
 pytest-cov = "*"
+
+# python3.10 compatibility
+# >   File "[...]/lib/python3.10/site-packages/mypy/main.py", line 11, in <module>
+# >     from typing_extensions import Final, NoReturn
+# > ModuleNotFoundError: No module named 'typing_extensions'
+typing-extensions = "*"
+# mypy on python<3.8
+typed-ast = {markers = "python_version < '3.8'"}
 
 [requires]
 python_version = "3"
