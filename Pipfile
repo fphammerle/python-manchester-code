@@ -7,7 +7,7 @@ name = "pypi"
 manchester-code = {editable = true, path = "."}
 
 [dev-packages]
-black = "==21.12b0"
+black = "*"
 mypy = "*"
 pylint = "*"
 pylint-import-requirements = "*"
