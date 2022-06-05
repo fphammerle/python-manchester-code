@@ -40,10 +40,7 @@ def encode(data: typing.Union[bytes, bytearray, typing.List[int]]) -> bytes:
     for byte in data:
         manchester_code.extend((0, 0))
         for bit_index in range(7, -1, -1):
-            if byte & (0b1 << bit_index):
-                bits = 0b10
-            else:
-                bits = 0b01
+            bits = 0b10 if (byte & (0b1 << bit_index)) else 0b01
             if bit_index >= 4:
                 manchester_code[-2] |= bits << (bit_index * 2 - 8)
             else:
