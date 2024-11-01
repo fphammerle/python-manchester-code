@@ -22,7 +22,7 @@ Encode & decode data as Manchester code <https://en.wikipedia.org/wiki/Mancheste
 import typing
 
 
-def encode(data: typing.Union[bytes, bytearray, typing.List[int]]) -> bytes:
+def encode(data: typing.Union[bytes, bytearray, list[int]]) -> bytes:
     """
     G. E. Thomas convention
 
@@ -36,7 +36,7 @@ def encode(data: typing.Union[bytes, bytearray, typing.List[int]]) -> bytes:
     >>> ''.join(f'{m:08b}' for m in manchester_code)
     '011010011010011001101010010110100110100101101010'
     """
-    manchester_code: typing.List[int] = []
+    manchester_code: list[int] = []
     for byte in data:
         manchester_code.extend((0, 0))
         for bit_index in range(7, -1, -1):
@@ -56,7 +56,7 @@ def _decode_manchester_bit(manchester_bit: int) -> int:
     raise ValueError(f"invalid manchester bit 0b{manchester_bit:02b}")
 
 
-def decode(manchester_code: typing.Union[bytes, bytearray, typing.List[int]]) -> bytes:
+def decode(manchester_code: typing.Union[bytes, bytearray, list[int]]) -> bytes:
     """
     G. E. Thomas convention
 

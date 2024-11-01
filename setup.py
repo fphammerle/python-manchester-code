@@ -46,7 +46,7 @@ setuptools.setup(
         "Programming Language :: Python :: 3.10",
         "Topic :: Communications",
     ],
-    python_requires=">=3.8",  # python<3.8 untested
+    python_requires=">=3.9",  # python3.9 for PEP585
     install_requires=[],
     setup_requires=["setuptools_scm"],
     tests_require=["pytest"],
