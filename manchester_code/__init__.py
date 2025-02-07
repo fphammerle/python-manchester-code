@@ -91,7 +91,7 @@ def _bit_to_int(bit: typing.Union[int, bool]) -> int:
 
 
 def decode_bits(
-    manchester_code: typing.Iterable[typing.Union[int, bool]]
+    manchester_code: typing.Iterable[typing.Union[int, bool]],
 ) -> typing.Iterator[bool]:
     """
     G. E. Thomas convention
