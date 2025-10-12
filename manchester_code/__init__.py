@@ -19,10 +19,10 @@
 Encode & decode data as Manchester code <https://en.wikipedia.org/wiki/Manchester_code>
 """
 
-import typing
+import collections.abc
 
 
-def encode(data: typing.Union[bytes, bytearray, list[int]]) -> bytes:
+def encode(data: bytes | bytearray | list[int]) -> bytes:
     """
     G. E. Thomas convention
 
@@ -56,7 +56,7 @@ def _decode_manchester_bit(manchester_bit: int) -> int:
     raise ValueError(f"invalid manchester bit 0b{manchester_bit:02b}")
 
 
-def decode(manchester_code: typing.Union[bytes, bytearray, list[int]]) -> bytes:
+def decode(manchester_code: bytes | bytearray | list[int]) -> bytes:
     """
     G. E. Thomas convention
 
@@ -83,7 +83,7 @@ def decode(manchester_code: typing.Union[bytes, bytearray, list[int]]) -> bytes:
     return bytes(data)
 
 
-def _bit_to_int(bit: typing.Union[int, bool]) -> int:
+def _bit_to_int(bit: int | bool) -> int:
     bit = int(bit)
     if bit not in [0, 1]:
         raise ValueError(f"invalid bit {bit!r}, expected 0, False, 1, or True")
@@ -91,8 +91,8 @@ def _bit_to_int(bit: typing.Union[int, bool]) -> int:
 
 
 def decode_bits(
-    manchester_code: typing.Iterable[typing.Union[int, bool]],
-) -> typing.Iterator[bool]:
+    manchester_code: collections.abc.Iterable[int | bool],
+) -> collections.abc.Iterator[bool]:
     """
     G. E. Thomas convention
 

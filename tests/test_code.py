@@ -17,8 +17,6 @@
 
 # pylint: disable=missing-docstring
 
-import typing
-
 import pytest
 
 import manchester_code
@@ -41,14 +39,14 @@ _DATA_MANCHESTER_CODE_MAPPING = (
 
 
 @pytest.mark.parametrize(("data", "code"), _DATA_MANCHESTER_CODE_MAPPING)
-def test_encode(data: typing.List[int], code: typing.List[int]) -> None:
+def test_encode(data: list[int], code: list[int]) -> None:
     assert bytes(code) == manchester_code.encode(data)
     assert bytes(code) == manchester_code.encode(bytes(data))
     assert bytes(code) == manchester_code.encode(bytearray(data))
 
 
 @pytest.mark.parametrize(("data", "code"), _DATA_MANCHESTER_CODE_MAPPING)
-def test_decode(data: typing.List[int], code: typing.List[int]) -> None:
+def test_decode(data: list[int], code: list[int]) -> None:
     assert bytes(data) == manchester_code.decode(code)
     assert bytes(data) == manchester_code.decode(bytes(code))
     assert bytes(data) == manchester_code.decode(bytearray(code))
@@ -72,7 +70,7 @@ def test_decode_invalid() -> None:
         ([1, 0, 1, 1], [True, False, False, True, True, False, True, False]),
     ],
 )
-def test_decode_bits(data: typing.List[int], code: typing.List[bool]) -> None:
+def test_decode_bits(data: list[int], code: list[bool]) -> None:
     assert list(manchester_code.decode_bits(code)) == data
     # test support for iterator
     assert list(manchester_code.decode_bits(not b for b in code)) == [

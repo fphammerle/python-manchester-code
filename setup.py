@@ -41,12 +41,12 @@ setuptools.setup(
         "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
         "Operating System :: POSIX :: Linux",
         # .github/workflows/python.yml
-        "Programming Language :: Python :: 3.8",
-        "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Topic :: Communications",
     ],
-    python_requires=">=3.9",  # python3.9 for PEP585
+    # >=3.9 for type hinting generics (PEP585)
+    # >=3.10 union types as X | Y (PEP604)
+    python_requires=">=3.10",
     install_requires=[],
     tests_require=["pytest"],
 )
