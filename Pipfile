@@ -8,7 +8,15 @@ manchester-code = {editable = true, path = "."}
 
 [dev-packages]
 black = "*"
+# pylint>=4 requires dill on all python versions (>=0.2 on py<3.11, >=0.3.6 on py>=3.11)
+# but pipenv only resolves the dill requirement matching the lock-generation python version,
+# leaving dill uninstalled on the other versions
+dill = "*"
 mypy = "*"
+# mypy requires typing_extensions on all python versions
+# but pipenv only resolves the requirement matching the lock-generation python version,
+# leaving typing_extensions uninstalled on the other versions
+typing_extensions = "*"
 pylint = "*"
 pytest = "*"
 pytest-cov = "*"
