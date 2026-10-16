@@ -6,6 +6,8 @@
   record the lesson in `AGENTS.md` **automatically**, without being asked, so it isn't repeated.
 - If a mistake recurs although a rule for it already exists, make that rule stricter and more
   concrete (e.g. a mandatory check before acting) instead of just restating it.
+- When writing or updating `AGENTS.md`, only add information that isn't already obvious from the
+  repository itself (e.g. Git LFS tracking is visible in `.gitattributes` and marked on GitHub).
 
 ## Commit messages
 
@@ -22,7 +24,8 @@
 
 - Only document **user-facing** changes (features, bug fixes, removed support).
 - Test tooling changes (e.g. `Pipfile`, `Pipfile.lock`) are not user-facing → no entry needed.
-- Wording for Python version support: `declare compatibility with \`python3.X\``
+- Wording for Python version support: `declare compatibility with \`python3.X\`` (under
+  `### Added`), `compatibility with \`python3.X\`` (under `### Removed`)
 
 ## Pull requests
 
@@ -39,6 +42,18 @@
 ## CI failures
 
 - Fix CI failures automatically, iterating until all checks are green — no need to ask first.
+
+## Supported Python versions
+
+- Keep the `tests` matrix in `.github/workflows/python.yml`, the `Programming Language :: Python :: 3.X`
+  classifiers and `python_requires` in `setup.py` consistent when adding or dropping a Python version.
+- The lowest supported Python version is the lowest one in that matrix.
+
+## Files synced with other repositories
+
+- Files starting with a `sync with <url>` comment are shared with other repositories. Keep them
+  structurally in sync and mention in the PR description when a change should be ported to the
+  referenced file as well.
 
 ## GitHub comments that @-mention a bot
 
