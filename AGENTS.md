@@ -13,6 +13,7 @@
 
 - Attribution line: `Co-Authored-By: Claude <model name> <noreply@anthropic.com>` — always include the model name,
   e.g. `Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>`
+  (see https://web.archive.org/web/20261016172400/https://docs.github.com/en/pull-requests/how-tos/commit-changes/creating-a-commit-with-multiple-authors)
 - Do **not** include a `Claude-Session:` line — the session URL is private.
 - Explain **why**, not what — don't restate in prose what's already obvious from `git diff` of
   the commit (e.g. "add a notice to the README", "update section X").
@@ -24,6 +25,8 @@
 
 - Only document **user-facing** changes (features, bug fixes, removed support).
 - Test tooling changes (e.g. `Pipfile`, `Pipfile.lock`) are not user-facing → no entry needed.
+- CI / build tooling changes (e.g. GitHub Actions workflows, `dependabot.yml`) are not
+  user-facing → no entry needed.
 - Wording for Python version support: `declare compatibility with \`python3.X\`` (under
   `### Added`), `compatibility with \`python3.X\`` (under `### Removed`)
 
@@ -33,15 +36,47 @@
 - One commit per PR; amend rather than adding new commits.
 - Force-push with `--force-with-lease` on feature branches.
 - **Never force-push to `master`.**
-- **Always open a pull request — never push directly to `master`.**
+- **Always open a pull request — never push directly to `master`** (the only exception is
+  fast-forwarding `master` to a pull request's head commit, see "Merging pull requests").
 - **Never amend or force-push a branch whose PR is already merged or closed** — that rewrites
   history that's already landed (or been reviewed) and leaves a dangling branch that no longer
   reflects what merged. For a follow-up change, create a **new** branch (from current `master`)
   and a **new** PR instead.
+  - This has happened despite this rule, so before **every** amend / push to an existing branch,
+    first fetch its PR's current state from GitHub — pull requests may have been merged since you
+    last looked.
+- After a branch has been **fully** merged into `master`, delete it (on GitHub and locally). If
+  only a subset of its commits was merged, keep it and rebase the remaining commits onto `master`
+  instead (`git rebase --onto origin/master <last merged commit>`).
+
+## Merging pull requests
+
+- Keep existing commit signatures: never rewrite commits when merging — no GitHub squash or rebase
+  merge, no cherry-picking or re-creating commits locally. Rewriting replaces signed commits (e.g.
+  Dependabot's) with new, unsigned or differently signed ones.
+- Pull requests / branches with a **single commit**, or whose changes should be squashed into a
+  single commit: **fast-forward** `master` to the branch's head commit, so that exact commit lands
+  on `master`.
+  - Squashing belongs on the branch, done by its author — squashing someone else's signed commits
+    yourself would drop their signatures.
+  - The head commit's parent must be the current `master` tip. If it isn't, have the branch
+    rebased by its author (for Dependabot: the rebase command, see "GitHub comments that
+    @-mention a bot").
+  - All checks must have passed on **that exact head commit** — a push to `master` doesn't wait
+    for them the way GitHub's merge button does.
+  - Then push the head commit: `git push origin <head-sha>:master` (no force) — GitHub marks the
+    pull request as merged.
+- Pull requests / branches with **multiple commits that should stay separate**: create a merge
+  commit (GitHub merge method `merge`).
+- Never call GitHub's merge API without an explicit merge method, and never use `squash` or `rebase`.
 
 ## CI failures
 
 - Fix CI failures automatically, iterating until all checks are green — no need to ask first.
+- After a fix for a failing build is merged into `master`, **automatically** comment the
+  Dependabot rebase command on each of Dependabot's open pull requests (without being asked), so
+  their checks re-run on top of the fix instead of staying red. Follow the mandatory steps in
+  "GitHub comments that @-mention a bot" below.
 
 ## Supported Python versions
 
@@ -67,6 +102,9 @@
     character with the intended text. Only then post the next one.
   - If the body is wrong, edit the comment to the exact intended text (Dependabot does act on
     edited comments) and read it back again — don't leave a broken command posted.
+  - Creating the comment has corrupted the body **every time** so far, while editing it to the
+    same text came through intact — so never consider a bot command posted after the create
+    call alone; the read-back and (almost always needed) edit are part of posting it.
 - The same corruption also hits `@mentions` in PR descriptions and other GitHub text. Don't quote
   bot commands literally there (describe them instead, e.g. "the Dependabot rebase command"), and
   read every PR description back after creating or updating it.
@@ -88,3 +126,14 @@
   `python_version >= '3.11'`). Fix by re-running `pipenv lock` on the lowest supported version.
 - When constrained packages (e.g. `setuptools`, `urllib3`) need to override transitive
   resolution, put them in `[packages]`, not `[dev-packages]`.
+
+## `AGENTS.md` across repositories
+
+- The `AGENTS.md` files of the owner's repositories share most of their rules. Find them all with
+  a GitHub code search for `user:fphammerle filename:AGENTS.md`.
+- Creating an `AGENTS.md` for a repository: base it on **all** of them, not just one. Start from
+  the closest sibling, keep only the rules that fit the particular repository (e.g. no Python /
+  `Pipfile` rules for a `Dockerfile`-only repository, no rules on `Dockerfile` version pins for a
+  repository without a `Dockerfile`), and adapt repository-specific examples
+  (e.g. package names, commit subject conventions from `git log`). In the commit message, reference
+  the individual source each part was based on with full permanent URLs (commit hash + path).
